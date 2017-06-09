@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base href="/">
+        <meta charset="UTF-8">
+        <title>Лабораторная работа №9</title>
+        <link rel="stylesheet" type="text/css" href="https://se.ifmo.ru/~s207529/lab9/style.css">
+        <link rel="stylesheet" type="text/css" href="https://se.ifmo.ru/~s207529/lab9/table_style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+	<body>
+		<my-app>Loading...</my-app>
+		<script type="text/javascript" src="https://se.ifmo.ru/~s207529/lab9/polyfills.js"></script>
+		<script type="text/javascript" src="https://se.ifmo.ru/~s207529/lab9/vendor.js"></script>
+		<script type="text/javascript" src="https://se.ifmo.ru/~s207529/lab9/app.js"></script>
+        <script src="https://se.ifmo.ru/~s207529/lab9/stomp.js"></script>
+        <script type="text/javascript">
+            var client = Stomp.client("ws://localhost:61614/", "v11.stomp");
+            client.heartbeat.outgoing = 20000;
+            client.connect( "server", "password",
+                function() {
+                    client.subscribe("/topic/LOGINQ",
+                        function( message ) {
+                            alert( message );
+                        }, 
+                        { priority: 1 } 
+                    );
+                }
+            );            
+        </script>
+	</body>
+</html>
